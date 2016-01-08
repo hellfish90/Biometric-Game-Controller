@@ -63,7 +63,7 @@ int skinCounter = 0;
 int skinMax = 20;
 
 int calibrateLed = 12;
-int calibrateSeconds = 15;
+int calibrateSeconds = 1;
 
 int countSensorSamples = 0;
 int pulseSensorTempValue = 0;
@@ -317,7 +317,8 @@ void sendDirection(){
   Serial.print(";");
   Serial.print(analogRead(humidityAPin));
   Serial.print(";");
-  Serial.println(hungry);
+  Serial.print(hungry);
+  Serial.println("$");
 }
 
 
