@@ -63,7 +63,7 @@ int skinCounter = 0;
 int skinMax = 20;
 
 int calibrateLed = 12;
-int calibrateSeconds = 1;
+int calibrateSeconds = 10;
 
 int countSensorSamples = 0;
 int pulseSensorTempValue = 0;
@@ -253,6 +253,7 @@ void loopJostickController(){
 }
 
 void sendDirection(){
+  Serial.print("@");
 
   if(x > TOPMARGIN && y > TOPMARGIN){
     if(x>y && correctDirection){
