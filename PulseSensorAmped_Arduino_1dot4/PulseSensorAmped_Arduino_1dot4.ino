@@ -278,13 +278,15 @@ void sendDirection(){
       yWeight = 256 - y;
     }
   }
+  correctDirection=true;
+  
   if(xActive || yActive){
     if (xActive && yActive){
       if(xWeight>yWeight){
         if (x > 768 && correctDirection){
-          Serial.print("right;");
-        }else{
           Serial.print("left;");
+        }else{
+          Serial.print("right;");
         } 
       }else{
         if (y > 768 && correctDirection){
@@ -295,9 +297,9 @@ void sendDirection(){
       }
     }else if (xActive){
       if (x > 768 && correctDirection){
-        Serial.print("right;");
-      }else{
         Serial.print("left;");
+      }else{
+        Serial.print("right;");
       }      
     }else{
       if (y > 768 && correctDirection){
