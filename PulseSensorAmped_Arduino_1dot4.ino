@@ -255,60 +255,60 @@ void loopJostickController(){
 void sendDirection(){
   Serial.print("@");
 
-  if(x > TOPMARGIN && y > TOPMARGIN){
-    if(x>y && correctDirection){
-      Serial.print("right;");
-    }else{
-      Serial.print("down;");
+  boolean xActive = false;
+  boolean yActive = false;
+  int xWeight = 0;
+  int yWeight = 0;
+
+  if(x > 768 || x < 256){
+    xActive = true;
+    if( x > 768 ){
+      xWeight = x - 768;
     }
-  }else if(x > TOPMARGIN && y < TOPMARGIN){
-    if(x>y && y>125 && correctDirection){
-      Serial.print("right;");
-    }else{
-      Serial.print("up;");
+    else{
+      xWeight = 256 - x;
     }
-  }else if(x < BOTTOMMARGIN && y < BOTTOMMARGIN){
-    if(x<y && y>125 && correctDirection){
-      Serial.print("left;");
-    }else{
-      Serial.print("up;");
+  }
+  if(y > 768 || y < 256){
+    yActive = true;
+    if( y > 768 ){
+      yWeight = y - 768;
     }
-  }else if(x < BOTTOMMARGIN && y < BOTTOMMARGIN){
-    if(x>y && x>125 && correctDirection){
-      Serial.print("down;");
-    }else{
-      Serial.print("left;");
+    else{
+      yWeight = 256 - y;
     }
-  }else if(x>TOPMARGIN){
-    if(correctDirection){
-      Serial.print("right;");
+  }
+  if(xActive || yActive){
+    if (xActive && yActive){
+      if(xWeight>yWeight){
+        if (x > 768 && correctDirection){
+          Serial.print("right;");
+        }else{
+          Serial.print("left;");
+        } 
+      }else{
+        if (y > 768 && correctDirection){
+          Serial.print("up;");
+        }else{
+          Serial.print("down;");
+        }
+      }
+    }else if (xActive){
+      if (x > 768 && correctDirection){
+        Serial.print("right;");
+      }else{
+        Serial.print("left;");
+      }      
     }else{
-      Serial.print("left;");
+      if (y > 768 && correctDirection){
+        Serial.print("up;");
+      }else{
+        Serial.print("down;");
+      }
     }
-    
-  }else if(x<BOTTOMMARGIN){
-    if(correctDirection){
-      Serial.print("left;");
-    }else{
-      Serial.print("right;");
-    }
-    
-  }else if(y>TOPMARGIN){
-    if(correctDirection){
-      Serial.print("down;");
-    }else{
-      Serial.print("up;");
-    }
-  }else if(y<BOTTOMMARGIN){
-    if(correctDirection){
-      Serial.print("up;");
-    }else{
-      Serial.print("down;");
-    }
-    
-  }else{
+  }
+  else{
     Serial.print("stop;");
-    
   }
   Serial.print(pulseSensorStableValue);
   Serial.print(";");
